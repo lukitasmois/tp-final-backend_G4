@@ -1,0 +1,55 @@
+GIT
+
+Pasos a seguir cada vez que avanzamos en nuestra rama.
+
+git checkout uat
+1. te paras sobre la rama uat
+
+git pull origin uat
+2.traes los cambios del uat remoto (si es que hay)
+
+git branch <nombre-de-la-nueva-rama>
+3.creas la rama de la funcion que vayas a trabajar
+
+git checkout <nombre-de-la-nueva-rama>
+4. te paras sobre la rama nueva
+
+**haces los cambios en el codigo
+
+git add . 
+5. agregas todos los cambios nuevos a la rama
+
+git commit -m "Mensaje sobre los cambios"
+6. haces el commit sobre los cambios en la rama
+
+git checkout uat
+7. te paras sobre la rama uat
+
+git pull origin uat
+8.traes los cambios del uat remoto que pudiero surgir mientras trabajabas en la funcion que se esta
+desarrollando en la nueva rama (si es que hay)
+
+git merge <nombre-de-la-nueva-rama>
+9.mergeas la rama uat con la nueva rama y aplicas los cambios
+
+10.(opcional, pero buena practica)
+probas los cambios hechos,  por si a la uat se le actualizo algo y hay algun conflicto con el merge
+
+git push origin uat
+11. pusheas la rama uat al remoto
+
+
+Documentación (compleja) en gitflow
+
+
+***** TO DO BACKEND *****
+-traer todos los libros
+-traer 1 libro por id
+-traer todos los usuarios
+-traer todos los libros alquilados por el usuario
+-crud usuario (para página register)
+-login usuario
+-crud libros (para usuario admin)
+-alquilar 1 libro disponible
+-devolver 1 libro alquilado por el usuario logueado
+
