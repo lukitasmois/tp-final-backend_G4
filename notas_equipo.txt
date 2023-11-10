@@ -2,12 +2,41 @@ GIT
 
 Pasos a seguir cada vez que avanzamos en nuestra rama.
 
-1- En la uat: git pull
-2- creo un brach de lo que voy a trabajar (rama función1)
-3- merge de uat a función1
-4- trabajo en función1
-5- pruebas unitarias de funcion1
-6- commit y push de función1
-7- merge de función1 a uat
+git checkout uat
+1. te paras sobre la rama uat
+
+git pull origin uat
+2.traes los cambios del uat remoto (si es que hay)
+
+git branch <nombre-de-la-nueva-rama>
+3.creas la rama de la funcion que vayas a trabajar
+
+git checkout <nombre-de-la-nueva-rama>
+4. te paras sobre la rama nueva
+
+**haces los cambios en el codigo
+
+git add . 
+5. agregas todos los cambios nuevos a la rama
+
+git commit -m "Mensaje sobre los cambios"
+6. haces el commit sobre los cambios en la rama
+
+git checkout uat
+7. te paras sobre la rama uat
+
+git pull origin uat
+8.traes los cambios del uat remoto que pudiero surgir mientras trabajabas en la funcion que se esta
+desarrollando en la nueva rama (si es que hay)
+
+git merge <nombre-de-la-nueva-rama>
+9.mergeas la rama uat con la nueva rama y aplicas los cambios
+
+10.(opcional, pero buena practica)
+probas los cambios hechos,  por si a la uat se le actualizo algo y hay algun conflicto con el merge
+
+git push origin uat
+11. pusheas la rama uat al remoto
+
 
 Documentación (compleja) en gitflow
