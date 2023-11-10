@@ -1,0 +1,13 @@
+GIT
+
+Pasos a seguir cada vez que avanzamos en nuestra rama.
+
+1- En la uat: git pull
+2- creo un brach de lo que voy a trabajar (rama función1)
+3- merge de uat a función1
+4- trabajo en función1
+5- pruebas unitarias de funcion1
+6- commit y push de función1
+7- merge de función1 a uat
+
+Documentación (compleja) en gitflow
