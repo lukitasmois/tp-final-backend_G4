@@ -11,3 +11,16 @@ Pasos a seguir cada vez que avanzamos en nuestra rama.
 7- merge de función1 a uat
 
 Documentación (compleja) en gitflow
+
+
+***** TO DO BACKEND *****
+-traer todos los libros
+-traer 1 libro por id
+-traer todos los usuarios
+-traer todos los libros alquilados por el usuario
+-crud usuario (para página register)
+-login usuario
+-crud libros (para usuario admin)
+-alquilar 1 libro disponible
+-devolver 1 libro alquilado por el usuario logueado
+
