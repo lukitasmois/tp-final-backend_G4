@@ -53,3 +53,7 @@ Documentación (compleja) en gitflow
 -alquilar 1 libro disponible
 -devolver 1 libro alquilado por el usuario logueado
 
+
+***** EXTRAS *******
+-validar los campos por post
+
