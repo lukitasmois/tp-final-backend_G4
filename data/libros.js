@@ -22,4 +22,22 @@ async function getLibro(id) {
   return libro;
 }
 
-module.exports = { getAllLibros, getLibro };
+async function alquilarLibro(idLibro) {
+  const connectiondb = await conn.getConnection();
+  await connectiondb
+    .db(DATABASE)
+    .collection(LIBROS)
+    .updateOne({ _id: new ObjectId(idLibro) }, { $set: { Estado: 'Alquilado' } });
+}
+
+async function devolverLibro(idLibro) {
+  const connectiondb = await conn.getConnection();
+  await connectiondb
+    .db(DATABASE)
+    .collection(LIBROS)
+    .updateOne({ _id: new ObjectId(idLibro) }, { $set: { Estado: 'Disponible' } });
+}
+
+module.exports = { getAllLibros, getLibro, alquilarLibro, devolverLibro };
+
+
