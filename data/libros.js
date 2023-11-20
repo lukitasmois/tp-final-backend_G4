@@ -43,9 +43,9 @@ async function deleteLibro(id){
 
 async function updateLibro(libro){
   const connectiondb = await conn.getConnection();
-  const libroDb = await getLibro(libro._id);
+  const libroDb = { _id: new ObjectId(libro._id)};
   
-  const newLibro = {
+  const updateValues = {
     $set: {
       Titulo: libro.Titulo,
       Autor: libro.Autor,
@@ -61,7 +61,7 @@ async function updateLibro(libro){
   const result = await connectiondb
                         .db(DATABASE)
                         .collection(LIBROS)
-                        .updateOne(libroDb, newLibro);
+                        .updateOne(libroDb, updateValues);
   return result;
 }
 

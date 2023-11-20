@@ -1,47 +1,72 @@
 var express = require("express");
 var router = express.Router();
 const controller = require("../controllers/libros");
-const data = require('../data/libros');
 
-/* GET libros listing. */
+/* GET libros */
 router.get("/", async function (req, res, next) {
-  res.json(await controller.getAllLibros());
+  try {
+    const libros = await controller.getAllLibros();
+    res.json(libros);
+  } catch {
+    console.error(error);
+    res.status(500).send('Error al obtener libros');
+  }
 });
 
+/* GET libro por id */
 router.get("/:id", async (req, res) => {
-  res.json(await controller.getLibro(req.params.id));
+  try {
+    const libro = await controller.getLibro(req.params.id);
+    console.log(libro);
+    res.json(libro);
+  } catch(error) {
+    console.error(error);
+    res.status(500).send('Error al obtener libro');
+  }
 });
 
+/* POST libro */
 router.post('/', async (req, res) => {
   try {
     const newLibro = req.body;
-    const result = await data.addLibro(newLibro);
-    res.send(result);
+    const result = await controller.addLibro(newLibro);
+    res.status(201).json('Libro agregado con éxito');
   } catch (error) {
     console.log(error);
-    res.status(400).send(error);
+    res.status(400).send('Error al crear libro');
   }
 });
 
+/* DELETE libro */
 router.delete('/:id', async (req, res) => {
   const id = req.params.id;
   try {
-    const result = await data.deleteLibro(id);
-    res.send(result)
+    const result = await controller.deleteLibro(id);
+    if (result.deletedCount === 0) {
+      return res.status(400).json({message: 'Libro no encontrado'});
+    }
+    res.status(204).send();
   } catch (error) {
     console.log(error);
-    res.status(400).send(error);
+    res.status(400).send('Error al eliminar libro');
   }
 });
 
+/* PUT libro */
 router.put('/:id', async (req, res) => {
-  const id = req.params.id;
+  const libroUpdate = req.body;
+  libroUpdate._id = req.params.id;
+
   try {
-    const result = await data.updateLibro(id);
-    res.send(result)
+    const result = await controller.updateLibro(libroUpdate);
+    if (result.modifiedCount > 0) {
+      res.json({message: 'Libro actualizado con éxito'});
+    } else {
+      res.status(404).json({message: 'Libro no encontrado'});
+    }
   } catch (error) { 
     console.log(error);
-    res.status(400).send(error);
+    res.status(500).send('Error al actualizar libro');
   }
 });
 
