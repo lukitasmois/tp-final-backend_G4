@@ -9,4 +9,12 @@ async function getLibro(id) {
   return libros.getLibro(id);
 }
 
-module.exports = { getAllLibros, getLibro };
+async function alquilarLibro(idLibro) {
+  return libros.alquilarLibro(idLibro);
+}
+
+async function devolverLibro(idLibro) {
+  return libros.devolverLibro(idLibro);
+}
+
+module.exports = { getAllLibros, getLibro, alquilarLibro, devolverLibro };
