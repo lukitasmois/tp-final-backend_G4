@@ -31,4 +31,12 @@ router.post('/login', async function (req,res,next){
 
 })
 
+router.get('/user/:id', async function (req,res) {
+  res.json(await controllerUser.getUser(req.params.id));
+  })
+
+router.get('/getUsers', async function (req,res){
+  res.json(await controllerUser.getUsers());
+})
+
 module.exports = router;

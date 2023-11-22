@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongodb");
 const conn = require('./conn');
 const DATABASE = 'tp-final';
 const USERS = 'users';
@@ -31,4 +32,22 @@ async function generateToken(user) {
     return token; 
 }
 
-module.exports = {addUser, findByCredentials, generateToken};
+async function getUsers() {
+    const connectiondb = await conn.getConnection();
+  const users = await connectiondb
+    .db(DATABASE)
+    .collection(USERS)
+    .find({})
+    .toArray();
+  return users;
+}
+
+async function getUser(id) {
+    const connectiondb = await conn.getConnection();
+  const user = await connectiondb
+    .db(DATABASE)
+    .collection(USERS)
+    .findOne({ _id: new ObjectId(id) });
+  return user;
+}
+module.exports = {addUser, findByCredentials, generateToken, getUsers, getUser};

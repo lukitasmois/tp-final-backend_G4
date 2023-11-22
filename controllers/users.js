@@ -12,4 +12,12 @@ async function generateToken(user) {
   return users.generateToken(user);
 }
 
-module.exports = { findByCredentials, generateToken, addUser };
+async function getUsers() {
+  return users.getUsers();
+}
+
+async function getUser(id) {
+  return users.getUser(id);
+}
+
+module.exports = { findByCredentials, generateToken, addUser, getUsers, getUser };
