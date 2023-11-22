@@ -1,8 +1,9 @@
 var express = require("express");
 var router = express.Router();
 const controller = require("../controllers/libros");
+const libros = require("../data/libros");
 
-/* GET libros */
+/* GET libros listing. */
 router.get("/", async function (req, res, next) {
   try {
     const libros = await controller.getAllLibros();
@@ -70,4 +71,47 @@ router.put("/updateLibro/:id", async (req, res) => {
   }
 });
 
+router.post("/alquilar/:id", async (req, res) => {
+  const idLibro = req.params.id;
+  try {
+    await libros.alquilarLibro(idLibro);
+    res.json({ success: true, message: "Libro alquilado con éxito." });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Error al alquilar el libro." });
+  }
+});
+
+router.post("/devolver/:id", async (req, res) => {
+  const idLibro = req.params.id;
+  try {
+    await libros.devolverLibro(idLibro);
+    res.json({ success: true, message: "Libro devuelto con éxito." });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Error al devolver el libro." });
+  }
+});
+
+
+router.post("/alquilar/:id", async (req, res) => {
+  const idLibro = req.params.id;
+  try {
+    await libros.alquilarLibro(idLibro);
+    res.json({ success: true, message: "Libro alquilado con éxito." });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Error al alquilar el libro." });
+  }
+});
+
+router.post("/devolver/:id", async (req, res) => {
+  const idLibro = req.params.id;
+  try {
+    await libros.devolverLibro(idLibro);
+    res.json({ success: true, message: "Libro devuelto con éxito." });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Error al devolver el libro." });
+  }
+});
+
 module.exports = router;
+
+

@@ -22,6 +22,22 @@ async function getLibro(id) {
   return libro;
 }
 
+async function alquilarLibro(idLibro) {
+  const connectiondb = await conn.getConnection();
+  await connectiondb
+    .db(DATABASE)
+    .collection(LIBROS)
+    .updateOne({ _id: new ObjectId(idLibro) }, { $set: { Estado: 'Alquilado' } });
+}
+
+async function devolverLibro(idLibro) {
+  const connectiondb = await conn.getConnection();
+  await connectiondb
+    .db(DATABASE)
+    .collection(LIBROS)
+    .updateOne({ _id: new ObjectId(idLibro) }, { $set: { Estado: 'Disponible' } });
+}
+
 async function addLibro(libro) {
   const connectiondb = await conn.getConnection();
   const result = await connectiondb
@@ -65,4 +81,4 @@ async function updateLibro(libro) {
   return result;
 }
 
-module.exports = { getAllLibros, getLibro, addLibro, deleteLibro, updateLibro };
+module.exports = { getAllLibros, getLibro, alquilarLibro, devolverLibro, addLibro, deleteLibro, updateLibro};

@@ -21,4 +21,11 @@ async function updateLibro(libro) {
   return libros.updateLibro(libro);
 }
 
-module.exports = { getAllLibros, getLibro, addLibro, deleteLibro, updateLibro };
+async function alquilarLibro(idLibro) {
+  return libros.alquilarLibro(idLibro);
+}
+
+async function devolverLibro(idLibro) {
+  return libros.devolverLibro(idLibro);
+}
+module.exports = { getAllLibros, getLibro, alquilarLibro, devolverLibro, addLibro, deleteLibro, updateLibro  };
