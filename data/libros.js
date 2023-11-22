@@ -22,46 +22,46 @@ async function getLibro(id) {
   return libro;
 }
 
-async function addLibro(libro){
+async function addLibro(libro) {
   const connectiondb = await conn.getConnection();
   const result = await connectiondb
-                      .db(DATABASE)
-                      .collection(LIBROS)
-                      .insertOne(libro);
+    .db(DATABASE)
+    .collection(LIBROS)
+    .insertOne(libro);
   return result;
 }
 
-async function deleteLibro(id){
+async function deleteLibro(id) {
   const connectiondb = await conn.getConnection();
   const libro = await getLibro(id);
   const result = await connectiondb
-                        .db(DATABASE)
-                        .collection(LIBROS)
-                        .deleteOne(libro);
+    .db(DATABASE)
+    .collection(LIBROS)
+    .deleteOne(libro);
   return result;
 }
 
-async function updateLibro(libro){
+async function updateLibro(libro) {
   const connectiondb = await conn.getConnection();
-  const libroDb = { _id: new ObjectId(libro._id)};
-  
+  const libroDb = { _id: new ObjectId(libro._id) };
+
   const updateValues = {
     $set: {
       Titulo: libro.Titulo,
       Autor: libro.Autor,
       Genero: libro.Genero,
       Sinopsis: libro.Sinopsis,
-      'Fecha-publicacion': libro['Fecha-publicacion'],
+      "Fecha-publicacion": libro["Fecha-publicacion"],
       Editorial: libro.Editorial,
       Estado: libro.Estado,
-      Imagen: libro.Imagen
-    }   
-  }
+      Imagen: libro.Imagen,
+    },
+  };
 
   const result = await connectiondb
-                        .db(DATABASE)
-                        .collection(LIBROS)
-                        .updateOne(libroDb, updateValues);
+    .db(DATABASE)
+    .collection(LIBROS)
+    .updateOne(libroDb, updateValues);
   return result;
 }
 

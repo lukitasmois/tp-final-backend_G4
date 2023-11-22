@@ -9,7 +9,7 @@ router.get("/", async function (req, res, next) {
     res.json(libros);
   } catch {
     console.error(error);
-    res.status(500).send('Error al obtener libros');
+    res.status(500).send("Error al obtener libros");
   }
 });
 
@@ -19,54 +19,54 @@ router.get("/:id", async (req, res) => {
     const libro = await controller.getLibro(req.params.id);
     console.log(libro);
     res.json(libro);
-  } catch(error) {
+  } catch (error) {
     console.error(error);
-    res.status(500).send('Error al obtener libro');
+    res.status(500).send("Error al obtener libro");
   }
 });
 
 /* POST libro */
-router.post('/', async (req, res) => {
+router.post("/addLibro", async (req, res) => {
   try {
     const newLibro = req.body;
     const result = await controller.addLibro(newLibro);
-    res.status(201).json('Libro agregado con éxito');
+    res.status(201).json("Libro agregado con éxito");
   } catch (error) {
     console.log(error);
-    res.status(400).send('Error al crear libro');
+    res.status(400).send("Error al crear libro");
   }
 });
 
 /* DELETE libro */
-router.delete('/:id', async (req, res) => {
+router.delete("/deleteLibro/:id", async (req, res) => {
   const id = req.params.id;
   try {
     const result = await controller.deleteLibro(id);
     if (result.deletedCount === 0) {
-      return res.status(400).json({message: 'Libro no encontrado'});
+      return res.status(400).json({ message: "Libro no encontrado" });
     }
     res.status(204).send();
   } catch (error) {
     console.log(error);
-    res.status(400).send('Error al eliminar libro');
+    res.status(400).send("Error al eliminar libro");
   }
 });
 
 /* PUT libro */
-router.put('/:id', async (req, res) => {
+router.put("/updateLibro/:id", async (req, res) => {
   const libroUpdate = req.body;
   libroUpdate._id = req.params.id;
 
   try {
     const result = await controller.updateLibro(libroUpdate);
     if (result.modifiedCount > 0) {
-      res.json({message: 'Libro actualizado con éxito'});
+      res.json({ message: "Libro actualizado con éxito" });
     } else {
-      res.status(404).json({message: 'Libro no encontrado'});
+      res.status(404).json({ message: "Libro no encontrado" });
     }
-  } catch (error) { 
+  } catch (error) {
     console.log(error);
-    res.status(500).send('Error al actualizar libro');
+    res.status(500).send("Error al actualizar libro");
   }
 });
 
