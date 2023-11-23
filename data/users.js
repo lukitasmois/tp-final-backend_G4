@@ -43,11 +43,23 @@ async function getUsers() {
 }
 
 async function getUser(id) {
-    const connectiondb = await conn.getConnection();
+
+ const connectiondb = await conn.getConnection();
   const user = await connectiondb
     .db(DATABASE)
     .collection(USERS)
     .findOne({ _id: new ObjectId(id) });
   return user;
 }
-module.exports = {addUser, findByCredentials, generateToken, getUsers, getUser};
+
+async function alquilar(idUsuario, idLibro) {
+  const connectiondb = await conn.getConnection();
+  const user = await connectiondb.db(DATABASE)
+    .collection(USERS).findOneAndUpdate(
+      { _id: new ObjectId(idUsuario) }, // Buscar al usuario por su ID
+      { $addToSet: { libros: idLibro } }, // Agregar el idLibro al array de libros si no está presente
+      { returnOriginal: false } // Devolver el documento actualizado
+    );
+}
+
+module.exports = {addUser, findByCredentials, generateToken, getUsers, getUser, alquilar};

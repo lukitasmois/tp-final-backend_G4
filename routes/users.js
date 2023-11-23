@@ -39,4 +39,10 @@ router.get('/getUsers', async function (req,res){
   res.json(await controllerUser.getUsers());
 })
 
+router.post('/alquilar', async function alquilar(req, res) {
+  const idUser = req.body.idUser;
+  const idLibro = req.body.id;
+  res.json(await controllerUser.alquilar(idUser, idLibro))
+})
+
 module.exports = router;

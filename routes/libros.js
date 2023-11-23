@@ -73,6 +73,7 @@ router.put("/updateLibro/:id", async (req, res) => {
 
 router.post("/alquilar/:id", async (req, res) => {
   const idLibro = req.params.id;
+  const idUsuario = req.params.idUsuario
   try {
     await libros.alquilarLibro(idLibro);
     res.json({ success: true, message: "Libro alquilado con éxito." });
@@ -83,6 +84,7 @@ router.post("/alquilar/:id", async (req, res) => {
 
 router.post("/devolver/:id", async (req, res) => {
   const idLibro = req.params.id;
+  const idUsuario = req.params.idUsuario
   try {
     await libros.devolverLibro(idLibro);
     res.json({ success: true, message: "Libro devuelto con éxito." });

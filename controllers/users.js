@@ -20,4 +20,8 @@ async function getUser(id) {
   return users.getUser(id);
 }
 
-module.exports = { findByCredentials, generateToken, addUser, getUsers, getUser };
+async function alquilar(idUsuario, idLibro) {
+  return users.alquilar(idUsuario, idLibro)
+}
+
+module.exports = { findByCredentials, generateToken, addUser, getUsers, getUser, alquilar};
