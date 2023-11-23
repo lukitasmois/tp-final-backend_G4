@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 const controller = require("../controllers/libros");
 const libros = require("../data/libros");
+const users = require("../data/users");
 
 /* GET libros listing. */
 router.get("/", async function (req, res, next) {
@@ -73,45 +74,30 @@ router.put("/updateLibro/:id", async (req, res) => {
 
 router.post("/alquilar/:id", async (req, res) => {
   const idLibro = req.params.id;
+  const idUsuario = req.body.userId;
+
   try {
-    await libros.alquilarLibro(idLibro);
+    await controller.alquilarLibro(idLibro, idUsuario);
     res.json({ success: true, message: "Libro alquilado con éxito." });
   } catch (error) {
-    res.status(500).json({ success: false, message: "Error al alquilar el libro." });
+    res
+      .status(500)
+      .json({ success: false, message: "Error al alquilar el librou." });
   }
 });
 
 router.post("/devolver/:id", async (req, res) => {
   const idLibro = req.params.id;
+  const idUsuario = req.user._id;
+
   try {
-    await libros.devolverLibro(idLibro);
+    await libros.devolverLibro(idLibro, idUsuario);
     res.json({ success: true, message: "Libro devuelto con éxito." });
   } catch (error) {
-    res.status(500).json({ success: false, message: "Error al devolver el libro." });
-  }
-});
-
-
-router.post("/alquilar/:id", async (req, res) => {
-  const idLibro = req.params.id;
-  try {
-    await libros.alquilarLibro(idLibro);
-    res.json({ success: true, message: "Libro alquilado con éxito." });
-  } catch (error) {
-    res.status(500).json({ success: false, message: "Error al alquilar el libro." });
-  }
-});
-
-router.post("/devolver/:id", async (req, res) => {
-  const idLibro = req.params.id;
-  try {
-    await libros.devolverLibro(idLibro);
-    res.json({ success: true, message: "Libro devuelto con éxito." });
-  } catch (error) {
-    res.status(500).json({ success: false, message: "Error al devolver el libro." });
+    res
+      .status(500)
+      .json({ success: false, message: "Error al devolver el libro." });
   }
 });
 
 module.exports = router;
-
-

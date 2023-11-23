@@ -2,6 +2,7 @@ const { ObjectId } = require("mongodb");
 const conn = require("./conn");
 const DATABASE = "tp-final";
 const LIBROS = "libros";
+const USERS = "users";
 
 async function getAllLibros() {
   const connectiondb = await conn.getConnection();
@@ -22,20 +23,60 @@ async function getLibro(id) {
   return libro;
 }
 
-async function alquilarLibro(idLibro) {
+async function alquilarLibro(idLibro, idUsuario) {
   const connectiondb = await conn.getConnection();
+  const user = await connectiondb
+    .db(DATABASE)
+    .collection(USERS)
+    .findOne({ _id: new ObjectId(idUsuario) });
+
+  if (!user) {
+    throw new Error("Usuario no encontrado.");
+  }
+
   await connectiondb
     .db(DATABASE)
     .collection(LIBROS)
-    .updateOne({ _id: new ObjectId(idLibro) }, { $set: { Estado: 'Alquilado' } });
+    .updateOne(
+      { _id: new ObjectId(idLibro) },
+      { $set: { Estado: "Alquilado" } }
+    );
+
+  await connectiondb
+    .db(DATABASE)
+    .collection(USERS)
+    .updateOne(
+      { _id: new ObjectId(idUsuario) },
+      { $addToSet: { libros: new ObjectId(idLibro) } }
+    );
 }
 
-async function devolverLibro(idLibro) {
+async function devolverLibro(idLibro, idUsuario) {
   const connectiondb = await conn.getConnection();
+  const user = await connectiondb
+    .db(DATABASE)
+    .collection(USERS)
+    .findOne({ _id: new ObjectId(idUsuario) });
+
+  if (!user) {
+    throw new Error("Usuario no encontrado.");
+  }
+
   await connectiondb
     .db(DATABASE)
     .collection(LIBROS)
-    .updateOne({ _id: new ObjectId(idLibro) }, { $set: { Estado: 'Disponible' } });
+    .updateOne(
+      { _id: new ObjectId(idLibro) },
+      { $set: { Estado: "Disponible" } }
+    );
+
+  await connectiondb
+    .db(DATABASE)
+    .collection(USERS)
+    .updateOne(
+      { _id: new ObjectId(idUsuario) },
+      { $pull: { libros: new ObjectId(idLibro) } }
+    );
 }
 
 async function addLibro(libro) {
@@ -81,4 +122,12 @@ async function updateLibro(libro) {
   return result;
 }
 
-module.exports = { getAllLibros, getLibro, alquilarLibro, devolverLibro, addLibro, deleteLibro, updateLibro};
+module.exports = {
+  getAllLibros,
+  getLibro,
+  alquilarLibro,
+  devolverLibro,
+  addLibro,
+  deleteLibro,
+  updateLibro,
+};
